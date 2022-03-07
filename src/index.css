@@ -8,8 +8,6 @@
   --text-color: #d1d0c5;
   --error-color: #ca4754;
   --error-extra-color: #7e2a33;
-  --colorful-error-color: #ca4754;
-  --colorful-error-extra-color: #7e2a33;
 }
 
 *,
@@ -102,7 +100,9 @@ body {
 }
 
 
-.content {
+
+
+.typing-field{
   overflow-wrap: break-word;
   color: var(--sub-color);
   font-size: 21pt;
@@ -114,9 +114,22 @@ body {
 	user-select: none;
 }
 
+
 .word{
   margin-right: 10px;
   position: relative;
+}
+
+.correct{
+  color: var(--text-color);
+}
+
+.incorrect{
+  color: var(--error-color);
+}
+
+.incorrect .extra{
+  color: var(--error-extra-color);
 }
 
 .caret{
