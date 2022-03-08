@@ -1,13 +1,52 @@
-import { useRef, useState, useLayoutEffect } from "react";
+import {
+  useRef,
+  useState,
+  useLayoutEffect,
+  useEffect,
+  useCallback,
+} from "react";
 
-const useTyping = (words) => {
-  const [timer, setTimer] = useState(30);
+const useTyping = (shuffleWord) => {
+  const [words, setWords] = useState(shuffleWord());
+  const [timer, setTimer] = useState(15);
   const [typedWords, setTypedWords] = useState([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [typedWord, setTypedWord] = useState("");
   const [currentExtraLetter, setCurrentExtraLetter] = useState("");
+  const [firstKeyDown, setFirstKeyDown] = useState(false);
   const currentWordRef = useRef(null);
   const caretRef = useRef(null);
+
+  const resetAll = useCallback(() => {
+    setTimer(15);
+    setTypedWords([]);
+    setCurrentWordIndex(0);
+    setTypedWord("");
+    setCurrentExtraLetter("");
+    setFirstKeyDown(false);
+    setWords([]);
+    setTimeout(() => {
+      setWords(shuffleWord());
+    }, 0);
+  }, [shuffleWord]);
+
+  useEffect(() => {
+    if (firstKeyDown) {
+      const timerCounter = setInterval(() => {
+        const newCount = timer - 1;
+
+        setTimer(newCount >= 0 ? newCount : 0);
+      }, 1000);
+
+      if (timer <= 0) {
+        resetAll();
+      }
+
+      return () => {
+        clearInterval(timerCounter);
+      };
+    }
+  }, [timer, firstKeyDown, resetAll]);
 
   useLayoutEffect(() => {
     window.onkeydown = (e) => {
@@ -28,6 +67,9 @@ const useTyping = (words) => {
 
         if (currentWord)
           if (e.key === currentWord[typedWord.length]) {
+            if (!firstKeyDown) {
+              setFirstKeyDown(true);
+            }
             caretRef.current.style.left = `calc(${
               (typedWord.length + 1) * width
             }% - 8px)`;
@@ -83,7 +125,14 @@ const useTyping = (words) => {
     return () => {
       window.onkeydown = null;
     };
-  }, [currentExtraLetter, currentWordIndex, typedWord, typedWords, words]);
+  }, [
+    currentExtraLetter,
+    currentWordIndex,
+    firstKeyDown,
+    typedWord,
+    typedWords,
+    words,
+  ]);
 
   return {
     currentWordIndex,
@@ -92,6 +141,7 @@ const useTyping = (words) => {
     currentExtraLetter,
     typedWords,
     timer,
+    words,
   };
 };
 

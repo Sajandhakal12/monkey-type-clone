@@ -3,17 +3,18 @@ import Header from "./components/Header";
 import Type from "./components/Type";
 import useTyping from "./hooks/useTyping";
 
-import words from "./word";
+import shuffleWord from "./word";
 
 function App() {
   const {
+    words,
     timer,
     currentWordIndex,
     currentWordRef,
     caretRef,
     currentExtraLetter,
     typedWords,
-  } = useTyping(words);
+  } = useTyping(shuffleWord);
 
   return (
     <div className="app">

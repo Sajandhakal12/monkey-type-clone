@@ -5,9 +5,11 @@ const Type = ({
   caretRef,
   currentExtraLetter,
   typedWords,
+  timer,
 }) => {
   return (
     <div className="content">
+      {timer}
       <div className="typing-field">
         {words.map((word, idx) => (
           <>
