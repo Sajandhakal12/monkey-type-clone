@@ -116,7 +116,7 @@ body {
 
 
 .word{
-  margin-right: 10px;
+  margin-right: 1rem;
   position: relative;
 }
 
@@ -139,7 +139,6 @@ body {
   animation: caret 1.5s 1s infinite;
   position: absolute;
   top:-5px;
-  /* left: -3px; */
   opacity: 1;
 }
 
