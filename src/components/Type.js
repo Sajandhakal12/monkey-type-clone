@@ -9,7 +9,7 @@ const Type = ({
 }) => {
   return (
     <div className="content">
-      {timer}
+      <p className="timer">{timer}</p>
       <div className="typing-field">
         {words.map((word, idx) => (
           <>

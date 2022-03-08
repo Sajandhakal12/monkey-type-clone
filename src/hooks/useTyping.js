@@ -8,45 +8,71 @@ import {
 
 const useTyping = (shuffleWord) => {
   const [words, setWords] = useState(shuffleWord());
-  const [timer, setTimer] = useState(15);
+  const [timer, setTimer] = useState(30);
   const [typedWords, setTypedWords] = useState([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [typedWord, setTypedWord] = useState("");
   const [currentExtraLetter, setCurrentExtraLetter] = useState("");
   const [firstKeyDown, setFirstKeyDown] = useState(false);
+  const [result, setResult] = useState(null);
   const currentWordRef = useRef(null);
   const caretRef = useRef(null);
 
   const resetAll = useCallback(() => {
-    setTimer(15);
+    setTimer(30);
     setTypedWords([]);
     setCurrentWordIndex(0);
     setTypedWord("");
     setCurrentExtraLetter("");
     setFirstKeyDown(false);
     setWords([]);
+    setResult(null);
     setTimeout(() => {
       setWords(shuffleWord());
     }, 0);
   }, [shuffleWord]);
 
+  const prepareResult = useCallback(() => {
+    let correct = 0;
+    let wrong = 0;
+    let correctCharacters = 0;
+    let wrongCharacters = 0;
+    for (let index = 0; index < typedWords.length; index++) {
+      if (words[index] === typedWords[index]) {
+        correct++;
+        correctCharacters += words[index].length;
+      } else {
+        for (var i = 0; i < typedWords[index].length; i++) {
+          if (typedWords[index][i] === words[index][i]) {
+            correctCharacters++;
+          } else {
+            wrongCharacters++;
+          }
+        }
+        wrong++;
+      }
+    }
+    setResult({ correct, wrong, wrongCharacters, correctCharacters });
+  }, [typedWords, words]);
+
   useEffect(() => {
+    let timerCounter;
     if (firstKeyDown) {
-      const timerCounter = setInterval(() => {
+      timerCounter = setInterval(() => {
         const newCount = timer - 1;
 
         setTimer(newCount >= 0 ? newCount : 0);
       }, 1000);
 
       if (timer <= 0) {
-        resetAll();
+        prepareResult();
       }
-
-      return () => {
-        clearInterval(timerCounter);
-      };
     }
-  }, [timer, firstKeyDown, resetAll]);
+    return () => {
+      clearInterval(timerCounter);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timer, firstKeyDown]);
 
   useLayoutEffect(() => {
     window.onkeydown = (e) => {
@@ -100,6 +126,9 @@ const useTyping = (shuffleWord) => {
               );
             }
           } else if (e.key) {
+            if (!firstKeyDown) {
+              setFirstKeyDown(true);
+            }
             if (currentWordLength > typedWord.length) {
               currentWordRef.current.children[
                 typedWord.length + 1
@@ -142,6 +171,8 @@ const useTyping = (shuffleWord) => {
     typedWords,
     timer,
     words,
+    resetAll,
+    result,
   };
 };
 

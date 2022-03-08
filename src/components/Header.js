@@ -19,8 +19,7 @@ const Header = ({ timer }) => {
           <span>firstmistake</span>
         </p>
         <p>
-          <span>30s</span>
-          <span>60s</span>
+          <span className="active">30</span>
         </p>
       </div>
     </div>
