@@ -69,11 +69,13 @@ const Type = () => {
               }% - 8px)`;
               setTypedWord(typedWord + e.key);
             } else {
-              caretRef.current.style.left = `calc(${
-                typedWord.length * width
-              }% - 8px)`;
-              setTypedWord(typedWord + e.key);
-              setCurrentExtraLetter(currentExtraLetter + e.key);
+              if (currentExtraLetter.length <= 20) {
+                caretRef.current.style.left = `calc(${
+                  typedWord.length * width
+                }% - 8px)`;
+                setTypedWord(typedWord + e.key);
+                setCurrentExtraLetter(currentExtraLetter + e.key);
+              }
             }
           }
       }
