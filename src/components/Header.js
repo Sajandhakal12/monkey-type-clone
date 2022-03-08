@@ -1,7 +1,7 @@
 import React from "react";
 import { FiType } from "react-icons/fi";
 
-const Header = () => {
+const Header = ({ timer }) => {
   return (
     <div className="header">
       <div className="header-right">

@@ -1,6 +1,7 @@
 import { useRef, useState, useLayoutEffect } from "react";
 
 const useTyping = (words) => {
+  const [timer, setTimer] = useState(30);
   const [typedWords, setTypedWords] = useState([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [typedWord, setTypedWord] = useState("");
@@ -90,6 +91,7 @@ const useTyping = (words) => {
     caretRef,
     currentExtraLetter,
     typedWords,
+    timer,
   };
 };
 

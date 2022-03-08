@@ -23,6 +23,7 @@ const Type = ({
                       className="caret"
                       ref={caretRef}
                       style={{ left: "-8px" }}
+                      key={lIdx + "caret"}
                     >
                       {"|"}
                     </span>
@@ -34,10 +35,7 @@ const Type = ({
               ))}
               {idx === currentWordIndex && currentExtraLetter
                 ? currentExtraLetter.split("")?.map((letter, lIdx) => (
-                    <span
-                      key={lIdx + letter}
-                      className="letter incorrect extra"
-                    >
+                    <span key={lIdx + letter} className="letter extra">
                       {letter}
                     </span>
                   ))
@@ -45,10 +43,7 @@ const Type = ({
                     ?.substring(word.length)
                     .split("")
                     ?.map((letter, lIdx) => (
-                      <span
-                        key={lIdx + letter}
-                        className="letter incorrect extra"
-                      >
+                      <span key={letter + lIdx} className="letter extra">
                         {letter}
                       </span>
                     ))}

@@ -7,6 +7,7 @@ import words from "./word";
 
 function App() {
   const {
+    timer,
     currentWordIndex,
     currentWordRef,
     caretRef,
@@ -16,7 +17,7 @@ function App() {
 
   return (
     <div className="app">
-      <Header />
+      <Header timer={timer} />
       <Type
         words={words}
         currentWordIndex={currentWordIndex}
@@ -24,6 +25,7 @@ function App() {
         caretRef={caretRef}
         currentExtraLetter={currentExtraLetter}
         typedWords={typedWords}
+        timer={timer}
       />
       <Footer />
     </div>

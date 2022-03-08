@@ -128,7 +128,7 @@ body {
   color: var(--error-color);
 }
 
-.incorrect .extra{
+.extra{
   color: var(--error-extra-color);
 }
 
