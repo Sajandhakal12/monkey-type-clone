@@ -16,7 +16,6 @@ const Header = ({ timer }) => {
       <div className="header-left">
         <p>
           <span className="active">time</span>
-          <span>firstmistake</span>
         </p>
         <p>
           <span className="active">30</span>

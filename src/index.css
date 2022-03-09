@@ -172,3 +172,16 @@ body {
     opacity: 1;
   }
 }
+
+
+.links {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color:var(--sub-color);
+  text-decoration: none;
+}
+
+.links:hover {
+  color:var(--text-color)
+}
